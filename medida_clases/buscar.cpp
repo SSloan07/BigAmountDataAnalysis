@@ -3,7 +3,6 @@
 #include "persona.h"
 #include <memory>
 
-//ASIGNAR A VARIABLES LOS CALCULOS REPETITIVOS PARA AHORRAR MEMORIA
 
 void Buscar::sacarMayor( Persona *personaMayor , Persona *personaComparar)
 {
@@ -193,11 +192,4 @@ void Buscar::sacarMayorPorCuidadPorValor(std::vector<Persona> personas)
         std::cout << std::endl; 
     }
 } 
-
-
-
-
-
-
-
 
