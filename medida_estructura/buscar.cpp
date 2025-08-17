@@ -7,8 +7,8 @@
 
 void Buscar::sacarMayor( Persona *personaMayor , Persona *personaComparar)
 {
-    std::string fechaNacimientoMayor = personaMayor->getFechaNacimiento();
-    std::string fechaNacimientoComparar = personaComparar->getFechaNacimiento(); 
+    std::string fechaNacimientoMayor = personaMayor->fechaNacimiento;
+    std::string fechaNacimientoComparar = personaComparar->fechaNacimiento; 
 
     //Comparar años
 
@@ -68,7 +68,7 @@ void Buscar::sacarMayorPorCuidad(std::vector<Persona>* personas)
         //Sacar una persona cualquiera de la cuidad que estamos buscando
         for(size_t k = 0 ; k < tam ; k++)
         {
-            if((*personas)[k].getCiudadNacimiento() == ciudadMomento)
+            if((*personas)[k].ciudadNacimiento == ciudadMomento)
             {
                 personaMayor = &(*personas)[k];
                 break;  
@@ -78,7 +78,7 @@ void Buscar::sacarMayorPorCuidad(std::vector<Persona>* personas)
         //Comparar edades, debe salir de ultimas el más longevo de todos
         for(size_t j = 0 ; j < tam ; j++)
         {
-            if(ciudadMomento == (*personas)[j].getCiudadNacimiento())
+            if(ciudadMomento == (*personas)[j].ciudadNacimiento)
             {
                 sacarMayor(personaMayor , &(*personas)[j]); 
             }
@@ -91,7 +91,7 @@ void Buscar::sacarMayorPorCuidad(std::vector<Persona>* personas)
 
     for (size_t i = 0 ; i < tammano ; i++)
     {
-        std::cout << "------------------La persona más longeva de " << personasMasRicas[i].getCiudadNacimiento() << " es: ----------------------------" << std::endl;
+        std::cout << "------------------La persona más longeva de " << personasMasRicas[i].ciudadNacimiento << " es: ----------------------------" << std::endl;
         personasMasRicas[i].mostrar();
         std::cout << std::endl; 
     }
@@ -100,8 +100,8 @@ void Buscar::sacarMayorPorCuidad(std::vector<Persona>* personas)
 
 Persona Buscar::sacarMayorPorValor (Persona personaMayor , Persona personaComparar)
 {
-    std::string fechaNacimientoMayor = personaMayor.getFechaNacimiento();
-    std::string fechaNacimientoComparar = personaComparar.getFechaNacimiento(); 
+    std::string fechaNacimientoMayor = personaMayor.fechaNacimiento;
+    std::string fechaNacimientoComparar = personaComparar.fechaNacimiento; 
 
     //Comparar años
 
@@ -165,7 +165,7 @@ void Buscar::sacarMayorPorCuidadPorValor(std::vector<Persona> personas)
         //Sacar una persona cualquiera de la cuidad que estamos buscando
         for(size_t k = 0 ; k < tam ; k++)
         {
-            if(personas[k].getCiudadNacimiento() == ciudadMomento)
+            if(personas[k].ciudadNacimiento == ciudadMomento)
             {
                 personaMayor = personas[k];
                 break;  
@@ -175,7 +175,7 @@ void Buscar::sacarMayorPorCuidadPorValor(std::vector<Persona> personas)
         //Comparar edades, debe salir de ultimas el más longevo de todos
         for(size_t j = 0 ; j < tam ; j++)
         {
-            if(ciudadMomento == personas[j].getCiudadNacimiento())
+            if(ciudadMomento == personas[j].ciudadNacimiento)
             {
                 personaMayor = sacarMayorPorValor(personaMayor , personas[j]); 
             }
@@ -188,7 +188,7 @@ void Buscar::sacarMayorPorCuidadPorValor(std::vector<Persona> personas)
 
     for (size_t i = 0 ; i < tammano ; i++)
     {
-        std::cout << "------------------La persona más longeva de " << personasMasRicas[i].getCiudadNacimiento() << " es: ----------------------------" << std::endl;
+        std::cout << "------------------La persona más longeva de " << personasMasRicas[i].ciudadNacimiento << " es: ----------------------------" << std::endl;
         personasMasRicas[i].mostrar();
         std::cout << std::endl; 
     }
@@ -214,7 +214,7 @@ void Buscar::buscarPersonas18añosDeclarenRenta(std::vector<Persona>* personas)
     {
         
 
-        std::string fechaNacimientoComparar = (*personas)[i].getFechaNacimiento(); 
+        std::string fechaNacimientoComparar = (*personas)[i].fechaNacimiento; 
 
         //Comparar años
     
@@ -233,7 +233,7 @@ void Buscar::buscarPersonas18añosDeclarenRenta(std::vector<Persona>* personas)
         //Si tiene 18
         if(((currentYear - yearPersonaComparar) == 18) && (currentMes >= mesPersonaComparar) && (currentDia >= diaMenor))
         {
-            if((*personas)[i].getDeclaranteRenta())
+            if((*personas)[i].declaranteRenta)
             {
                 personas18QueDecalren.emplace_back((*personas)[i]); 
             }
@@ -280,7 +280,7 @@ void Buscar::buscarPersonas18añosDeclarenRentaPorValor(std::vector<Persona> per
     {
         
 
-        std::string fechaNacimientoComparar = (personas)[i].getFechaNacimiento(); 
+        std::string fechaNacimientoComparar = (personas)[i].fechaNacimiento; 
 
         //Comparar años
     
@@ -299,7 +299,7 @@ void Buscar::buscarPersonas18añosDeclarenRentaPorValor(std::vector<Persona> per
         //Si tiene 18
         if(((currentYear - yearPersonaComparar) == 18) && (currentMes >= mesPersonaComparar) && (currentDia >= diaMenor))
         {
-            if((personas)[i].getDeclaranteRenta())
+            if((personas)[i].declaranteRenta)
             {
                 personas18QueDecalren.emplace_back((personas)[i]); 
             }

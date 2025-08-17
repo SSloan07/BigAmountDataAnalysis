@@ -24,7 +24,8 @@ void mostrarMenu() {
     std::cout << "\n5. Exportar estadísticas a CSV";
     std::cout << "\n6. Salir";
     std::cout << "\n7. Más longevo del país";
-    std::cout << "\n 8. Más longevo por cuidad"; 
+    std::cout << "\n8. Más longevo por cuidad"; 
+    std::cout << "\n9. Buscar personas de 18 años que decalren renta"; 
     std::cout << "\nSeleccione una opción: ";
 }
 
@@ -269,6 +270,37 @@ int main() {
                 tiempo_detalle = monitor.detener_tiempo();
                 memoria_detalle = monitor.obtener_memoria() - memoria_inicio;
                 monitor.registrar("Buscar persona longeva por cuidades por valor", tiempo_detalle, memoria_detalle);
+
+                break;
+            }
+
+            {
+                case 9:
+                std::cout << "Las primeras 10 personas de 18 año que declaren renta son (Por referencia):" << std::endl;
+
+                
+                //Iniciar el contador
+                monitor.iniciar_tiempo();
+
+                //Buscar personas mayores por cuidad
+                buscar.buscarPersonas18añosDeclarenRenta(personas.get()); 
+
+                double tiempo_detalle = monitor.detener_tiempo();
+                long memoria_detalle = monitor.obtener_memoria() - memoria_inicio;
+                monitor.registrar("Personas declarantes con 18 por referencia", tiempo_detalle, memoria_detalle);
+
+                std::cout << "---------------------------------------------------------------------------------------------" << std::endl; 
+                std::cout << "Las primeras 10 personas de 18 año que declaren renta son (Por valor):" << std::endl;
+                
+                //Iniciar el contador
+                monitor.iniciar_tiempo();
+
+                //Buscar personas mayores por cuidad
+                buscar.buscarPersonas18añosDeclarenRentaPorValor(*personas); 
+
+                tiempo_detalle = monitor.detener_tiempo();
+                memoria_detalle = monitor.obtener_memoria() - memoria_inicio;
+                monitor.registrar("Personas declarantes con 18 por valor", tiempo_detalle, memoria_detalle);
 
                 break;
             }

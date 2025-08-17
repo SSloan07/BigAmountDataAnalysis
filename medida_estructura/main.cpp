@@ -5,6 +5,7 @@
 #include "persona.h"
 #include "generador.h"
 #include "monitor.h" // Nuevo header para monitoreo
+#include "buscar.h"
 
 void mostrarMenu() {
     std::cout << "\n\n=== MENÚ PRINCIPAL ===";
@@ -15,6 +16,9 @@ void mostrarMenu() {
     std::cout << "\n4. Mostrar estadísticas de rendimiento";
     std::cout << "\n5. Exportar estadísticas a CSV";
     std::cout << "\n6. Salir";
+    std::cout << "\n7. Más longevo del país";
+    std::cout << "\n8. Más longevo por cuidad"; 
+    std::cout << "\n9. Buscar personas de 18 años que decalren renta"; 
     std::cout << "\nSeleccione una opción: ";
 }
 
@@ -24,6 +28,7 @@ int main() {
     // Usar unique_ptr para manejar la colección de personas
     std::unique_ptr<std::vector<Persona>> personas = nullptr;
     Monitor monitor;
+    Buscar buscar; 
     
     int opcion;
     do {
@@ -141,6 +146,119 @@ int main() {
             case 6:
                 std::cout << "Saliendo...\n";
                 break;
+
+
+            {
+
+                case 7:
+    
+                    //REFERENCIA
+                    std::cout << "La persona más longeva es (Por referencia):" << std::endl;
+    
+                    //Iniciar el contador
+                    monitor.iniciar_tiempo();
+                    
+                    Persona *personaMayor = &(*personas)[0]; 
+    
+                    tam = personas->size(); 
+                                    
+                    for(size_t i = 1 ; i < tam ; i++)
+                    {
+                        buscar.sacarMayor(personaMayor, &(*personas)[i]);
+                    }
+    
+                    personaMayor->mostrar(); 
+    
+                    double tiempo_detalle = monitor.detener_tiempo();
+                    long memoria_detalle = monitor.obtener_memoria() - memoria_inicio;
+                    monitor.registrar("Buscar persona longeva por referencia", tiempo_detalle, memoria_detalle);
+    
+                    //VALOR
+                    std::cout << "La persona más longeva es (Por valor):" << std::endl;
+    
+                    //Iniciar el contador
+                    monitor.iniciar_tiempo();
+                    
+                    Persona personaMayorValor = (*personas)[0]; 
+    
+                    tam = personas->size(); 
+                                    
+                    for(size_t i = 1 ; i < tam ; i++)
+                    {
+                    personaMayorValor = buscar.sacarMayorPorValor(personaMayorValor , (*personas)[i]);
+                    }
+    
+                    personaMayorValor.mostrar(); 
+    
+                    tiempo_detalle = monitor.detener_tiempo();
+                    memoria_detalle = monitor.obtener_memoria() - memoria_inicio;
+                    monitor.registrar("Buscar persona longeva por valor", tiempo_detalle, memoria_detalle);
+    
+    
+                    break;
+                }
+    
+                {
+                    case 8:
+                    std::cout << "Las personas más longevas de cada país son (Por referencia):" << std::endl;
+    
+                    
+                    //Iniciar el contador
+                    monitor.iniciar_tiempo();
+    
+                    //Buscar personas mayores por cuidad
+                    buscar.sacarMayorPorCuidad(personas.get());
+    
+                    double tiempo_detalle = monitor.detener_tiempo();
+                    long memoria_detalle = monitor.obtener_memoria() - memoria_inicio;
+                    monitor.registrar("Buscar persona longeva por cuidades por referencia", tiempo_detalle, memoria_detalle);
+    
+                    std::cout << "Las personas más longevas de cada país son (Por valor):" << std::endl;
+    
+                    
+                    //Iniciar el contador
+                    monitor.iniciar_tiempo();
+    
+                    //Buscar personas mayores por cuidad
+                    buscar.sacarMayorPorCuidadPorValor(*personas);
+    
+                    tiempo_detalle = monitor.detener_tiempo();
+                    memoria_detalle = monitor.obtener_memoria() - memoria_inicio;
+                    monitor.registrar("Buscar persona longeva por cuidades por valor", tiempo_detalle, memoria_detalle);
+    
+                    break;
+                }
+    
+                {
+                    case 9:
+                    std::cout << "Las primeras 10 personas de 18 año que declaren renta son (Por referencia):" << std::endl;
+    
+                    
+                    //Iniciar el contador
+                    monitor.iniciar_tiempo();
+    
+                    //Buscar personas mayores por cuidad
+                    buscar.buscarPersonas18añosDeclarenRenta(personas.get()); 
+    
+                    double tiempo_detalle = monitor.detener_tiempo();
+                    long memoria_detalle = monitor.obtener_memoria() - memoria_inicio;
+                    monitor.registrar("Personas declarantes con 18 por referencia", tiempo_detalle, memoria_detalle);
+    
+                    std::cout << "---------------------------------------------------------------------------------------------" << std::endl; 
+                    std::cout << "Las primeras 10 personas de 18 año que declaren renta son (Por valor):" << std::endl;
+                    
+                    //Iniciar el contador
+                    monitor.iniciar_tiempo();
+    
+                    //Buscar personas mayores por cuidad
+                    buscar.buscarPersonas18añosDeclarenRentaPorValor(*personas); 
+    
+                    tiempo_detalle = monitor.detener_tiempo();
+                    memoria_detalle = monitor.obtener_memoria() - memoria_inicio;
+                    monitor.registrar("Personas declarantes con 18 por valor", tiempo_detalle, memoria_detalle);
+    
+                    break;
+                }
                 
             default:
                 std::cout << "Opción inválida!\n";
