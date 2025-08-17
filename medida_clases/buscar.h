@@ -18,6 +18,8 @@ class Buscar {
 
         void sacarMayor(Persona *personaMayor , Persona *personaComparar); 
         void sacarMayorPorCuidad(std::vector<Persona>* personas); 
+        Persona sacarMayorPorValor (Persona personaMayor , Persona personaComparar);
+        void sacarMayorPorCuidadPorValor(std::vector<Persona> personas);
 
 
 }; 
