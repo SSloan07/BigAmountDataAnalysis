@@ -199,6 +199,10 @@ int main() {
             
             {
             case 6:
+            if (!personas || personas->empty()) {
+                std::cout << "\nNo hay datos disponibles. Use opción 0 primero.\n";
+                break;
+            }
 
             //REFERENCIA
             std::cout << "La persona más longeva es (Por referencia):" << std::endl;
@@ -248,6 +252,11 @@ int main() {
 
             {
                 case 7:
+
+                if (!personas || personas->empty()) {
+                    std::cout << "\nNo hay datos disponibles. Use opción 0 primero.\n";
+                    break;
+                }
                 std::cout << "Las personas más longevas de cada país son (Por referencia):" << std::endl;
 
                 
@@ -279,6 +288,11 @@ int main() {
 
             {
                 case 8:
+
+                if (!personas || personas->empty()) {
+                    std::cout << "\nNo hay datos disponibles. Use opción 0 primero.\n";
+                    break;
+                }
                 std::cout << "Las primeras 10 personas de 18 año que declaren renta son (Por referencia):" << std::endl;
 
                 
