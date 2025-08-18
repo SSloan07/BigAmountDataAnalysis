@@ -268,7 +268,7 @@ int main() {
 
                 double tiempo_detalle = monitor.detener_tiempo();
                 long memoria_detalle = monitor.obtener_memoria() - memoria_inicio;
-                monitor.registrar("Buscar persona longeva por cuidades por referencia", tiempo_detalle, memoria_detalle);
+                monitor.registrar("Buscar persona longeva por ciudades por referencia", tiempo_detalle, memoria_detalle);
 
                 std::cout << "Las personas más longevas de cada país son (Por valor):" << std::endl;
 
@@ -281,7 +281,7 @@ int main() {
 
                 tiempo_detalle = monitor.detener_tiempo();
                 memoria_detalle = monitor.obtener_memoria() - memoria_inicio;
-                monitor.registrar("Buscar persona longeva por cuidades por valor", tiempo_detalle, memoria_detalle);
+                monitor.registrar("Buscar persona longeva por ciudades por valor", tiempo_detalle, memoria_detalle);
 
                 break;
             }
@@ -342,7 +342,7 @@ int main() {
                 // Iniciar tiempo
                 monitor.iniciar_tiempo();
                 
-                buscar.personaConMayorPatrimonio(*personas);
+                buscar.personaConMayorPatrimonioPorValor(*personas);
                 
                 tiempo_rico = monitor.detener_tiempo();
                 memoria_rico = monitor.obtener_memoria() - memoria_inicio;
