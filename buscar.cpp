@@ -63,19 +63,29 @@ void Buscar::mostrarTop3CiudadesPatrimonio(const std::vector<Persona>& personas)
         
         if (contador > 0) {
             promedios.emplace_back(ciudad, total/contador);
+            // Guardamos el par (ciudad, promedio) en el vector
         }
     }
     
-    std::partial_sort(promedios.begin(), promedios.begin() + std::min(3, (int)promedios.size()), 
-                     promedios.end(), [](const auto& a, const auto& b) {
-                         return a.second > b.second;
-                     });
-    
-    std::cout << "\n====== TOP 3 CIUDADES ======\n";
-    for (int i = 0; i < 3 && i < promedios.size(); ++i) {
-        std::cout << i+1 << ". " << promedios[i].first 
-                  << ": $" << std::fixed << std::setprecision(2) << promedios[i].second << "\n";
-    }
+    // Ordena parcialmente el vector para encontrar el TOP 3
+    // Solo organiza los 3 primeros elementos como si estuvieran ordenados
+    // (es más eficiente que ordenar toda la lista cuando solo necesitamos el top)
+    std::partial_sort(
+        promedios.begin(),                                   // inicio del rango
+        promedios.begin() + std::min(3, (int)promedios.size()), // hasta el tercer elemento (o menos si no hay tantas ciudades)
+        promedios.end(),                                    // fin del rango
+        [](const auto& a, const auto& b) {                  // criterio de orden: mayor promedio primero
+            return a.second > b.second;  
+        }
+    );  
+
+    // Mostrar los 3 resultados (o menos si no hay suficientes ciudades)
+    std::cout << "\n====== TOP 3 CIUDADES ======\n";  
+    for (int i = 0; i < 3 && i < promedios.size(); ++i) {  
+        std::cout << i+1 << ". " << promedios[i].first      // nombre de la ciudad
+                << ": $" << std::fixed << std::setprecision(2)  
+                << promedios[i].second << "\n";           // promedio de patrimonio con 2 decimales
+    }  
 }
 
 // Función auxiliar para mostrar la persona más rica por ciudad
@@ -100,12 +110,43 @@ void Buscar::mostrarPersonaMasRicaPorCiudad(const std::vector<Persona>& personas
         }
     }
 }
-void contarPersonaPatrimonioMayor1000Millones(const std :: vector <Persona>& personas){
-    for (const auto& persona : personas){
-        
+// Función auxiliar para contar y validar el numero de personas con un patrimonio mayor a 1000 Millones 
+void Buscar::contarPersonaPatrimonioMayor1000Millones(const std::vector<Persona>& personas) {
+    std::vector<const Persona*> filtrados;
+
+    for (const auto& persona : personas) {
+        if (persona.getPatrimonio() >= 1000000000) {  // 1000 millones
+            filtrados.push_back(&persona); //Lleno el vector filtrados SOLO con la gente con un patrimonio mayor a 1000 millones
+        }
     }
 
+    std::cout << "El número de personas con un patrimonio >= 1000 Millones es: "
+              << filtrados.size() << "\n";
+
+    if (filtrados.empty()) {
+        return; // nada que mostrar
+    }
+
+    // Ordenar de menor a mayor patrimonio
+    auto compararPatrimonio = [](const Persona* a, const Persona* b) {
+        return a->getPatrimonio() < b->getPatrimonio();  // Esto de acá es una función lambda que recibe el inicio y fin del vector filtrados. Y en esta lina de codigo compara si el patrimonio de la persona anterior es menor a la posterior, en tal caso devuelve true, sino devuelve false. 
+    };
+
+    std::sort(filtrados.begin(), filtrados.end(), compararPatrimonio); //Ordena a filtrados deacuerdo a las condiciones devueltas por la función lambda. 
+
+    std::cout << "\n--- 5 personas con menor patrimonio dentro del grupo ---\n";
+    for (size_t i = 0; i < 5 && i < filtrados.size(); ++i) {
+        filtrados[i]->mostrar();
+    }
+
+    std::cout << "\n--- 5 personas con mayor patrimonio dentro del grupo ---\n";
+    for (size_t i = (filtrados.size() >= 5 ? filtrados.size() - 5 : 0);
+         i < filtrados.size(); ++i) {
+        filtrados[i]->mostrar();
+    }
 }
+
+
 
 // Función auxiliar para mostrar la persona más rica de un grupo con mensaje personalizado
 void Buscar::mostrarPersonaMasRicaGrupo(const std::vector<Persona*>& grupo, const std::string& nombreGrupo) {

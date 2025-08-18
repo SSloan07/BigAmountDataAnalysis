@@ -27,7 +27,8 @@ void mostrarMenu() {
     std::cout << "\n8. Buscar las 3 ciudades con mayor patrimonio en promedio ";
     std::cout << "\n9. Buscar la persona con mayor patrimonio por grupo del calendario de la DIAN"; 
     std::cout << "\n10. Contar personas por calendario"; 
-    std::cout << "\n11. Salir"; 
+    std::cout << "\n11. Contar personas con un patrimonio mayor a 1000 Millones";
+    std::cout << "\n12. Salir"; 
     std::cout << "\nSeleccione una opción: ";
 }
 
@@ -265,15 +266,32 @@ int main() {
             }
 
             case 10 :{ // Contar y validad personas por el calendario tributario de la DIAN
+                if (!personas || personas->empty()) {
+                    std::cout << "\nNo hay datos disponibles. Use opción 0 primero.\n";
+                    break;
+                }
                 monitor.iniciar_tiempo();
                 buscador.contarPersonasPorCalendario(*personas); 
                 double tiempo_gruposDian = monitor.detener_tiempo();
                 long memoria_gruposDian = monitor.obtener_memoria() - memoria_inicio;
-                monitor.registrar("Persona más rica", tiempo_gruposDian, memoria_gruposDian);
+                monitor.registrar("Contar personas por el calendario tributario de la DIAN", tiempo_gruposDian, memoria_gruposDian);
+                break; 
+            }
+            case 11 :{
+                if (!personas || personas->empty()) {
+                    std::cout << "\nNo hay datos disponibles. Use opción 0 primero.\n";
+                    break;
+                }
+                monitor.iniciar_tiempo(); 
+                buscador.contarPersonaPatrimonioMayor1000Millones(*personas); 
+                double tiempo_personasPatrimonioMayor1000Millones = monitor.detener_tiempo(); 
+                long memoria_personasPatrimonioMayor1000Millones = monitor.obtener_memoria() -memoria_inicio; 
+                monitor.registrar("Contar personas con un patrimonio mayor a 1000 Millones", tiempo_personasPatrimonioMayor1000Millones, memoria_personasPatrimonioMayor1000Millones);
+                break; 
             }
                 
 
-            case 11: { //salir
+            case 12: { //salir
                 std::cout << "Saliendo...\n";
                 break;
             } // Salir
@@ -283,13 +301,13 @@ int main() {
         }
         
         // Mostrar estadísticas de la operación (excepto para opciones 4,5,6)
-        if ((opcion >= 0 && opcion <= 3) || (opcion >= 6 && opcion <= 10)) {
+        if ((opcion >= 0 && opcion <= 3) || (opcion >= 6 && opcion <= 11)) {
             double tiempo = monitor.detener_tiempo();
             long memoria = monitor.obtener_memoria() - memoria_inicio;
             monitor.mostrar_estadistica("Opción " + std::to_string(opcion), tiempo, memoria);
         }
         
-    } while(opcion != 11);
+    } while(opcion != 12);
     
     return 0;
 }
